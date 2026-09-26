@@ -1,3 +1,3 @@
 Pendekatan,Accuracy,Precision,Recall,F1-Score,Waktu training (detik),Waktu prediksi per ulasan (detik)
-Model Klasik (TF-IDF + LogReg),1.0,1.0,1.0,1.0,0.003756099962629378,8.167499618139119e-06
-LLM API (Gemini 3.1 Flash-Lite),1.0,1.0,1.0,1.0,0.0,0.5224160730838777
+Model Klasik (TF-IDF + LogReg),1.0,1.0,1.0,1.0,0.0038512999890372157,4.41833302223434e-06
+LLM API (Gemini 3.1 Flash-Lite),1.0,1.0,1.0,1.0,0.0,0.16329424166566867
