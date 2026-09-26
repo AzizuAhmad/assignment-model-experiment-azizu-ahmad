@@ -80,6 +80,19 @@ Interpretasi nilai metrik:
 
 Karena hasilnya sama, test set ini belum cukup untuk membedakan kedua pendekatan. Skor model klasik juga terbantu karena hampir seluruh kalimat test sudah dilihat saat training.
 
+**Evaluasi tanpa kebocoran data**
+Untuk mengetahui performa pada kalimat yang belum pernah dilihat, model klasik dievaluasi ulang menggunakan `StratifiedGroupKFold` (5-fold, grup berupa teks ulasan), sehingga kalimat yang sama tidak pernah berada di train dan test secara bersamaan. Gemini diuji pada seluruh 40 kalimat unik (4 request), karena tidak pernah dilatih dengan data apa pun.
+
+| Pendekatan | Accuracy | Precision | Recall | F1-Score |
+|---|---|---|---|---|
+| Model Klasik (5-fold, rata-rata) | 0.445 | - | - | 0.441 |
+| Model Klasik (40 kalimat unik) | 0.500 | 0.500 | 0.500 | 0.500 |
+| LLM API (40 kalimat unik) | 1.000 | 1.000 | 1.000 | 1.000 |
+
+![Confusion matrix tanpa kebocoran](documentation/confusion_matrix_tanpa_kebocoran.png)
+
+Tanpa kebocoran data, model klasik hanya setara tebakan acak (10 ulasan negatif diprediksi positif dan 10 ulasan positif diprediksi negatif), sedangkan Gemini tetap benar seluruhnya. Penyebabnya, setiap fold hanya berisi sekitar 32 kalimat unik untuk training, banyak kata muncul di kedua kelas (misalnya "barang" muncul di 6 kalimat positif dan 6 kalimat negatif), dan kata penentu sentimen seperti "palsu" atau "premium" hanya muncul di satu kalimat sehingga tidak pernah dipelajari model. Dengan demikian, skor 1.00 model klasik pada test set utama sepenuhnya berasal dari hafalan.
+
 **Uji tambahan**
 Kedua pendekatan juga diuji dengan 10 ulasan baru yang ditulis manual dengan gaya bahasa yang mirip ulasan asli (mengandung slang, sindiran, dan sentimen campuran). Pengujian ini hanya untuk melihat kelemahan masing-masing pendekatan, sehingga tidak dihitung dalam metrik utama.
 
@@ -96,13 +109,14 @@ Untuk 60 ulasan digunakan 6 request. Rata-rata per ulasan sekitar 32 token input
 | Aspek | Model Klasik | LLM API |
 |---|---|---|
 | Skor pada test set | 1.00 (terbantu karena kalimat test terdapat di data train) | 1.00 |
+| Skor tanpa kebocoran data (40 kalimat unik) | 0.50 | 1.00 |
 | Ulasan dengan gaya bahasa baru | 6/10 | 10/10 |
 | Effort | Memerlukan data berlabel, training, dan training ulang | Tidak memerlukan training, cukup merancang prompt |
 | Kecepatan | Sangat cepat, berjalan secara lokal | Sekitar 0.16 detik per ulasan melalui jaringan |
 | Biaya | Hampir tidak ada | Sekitar $41 per 1 juta ulasan |
 | Ketergantungan | Tidak ada | Kuota, rate limit, dan versi model dari Google |
 
-**Kelemahan model klasik:** tidak memahami konteks. Kalimat sindiran seperti "Bagus sih kalau tujuannya buat dibuang..." dan ulasan campuran seperti "Seller ramah tapi produknya cacat" salah diprediksi karena mengandung kata positif. Kata yang belum pernah muncul di data train (misalnya "zonk") tidak dikenali, sehingga model cenderung memprediksi positif. Jumlah datanya juga terlalu sedikit dan berulang.
+**Kelemahan model klasik:** tidak memahami konteks. Kalimat sindiran seperti "Bagus sih kalau tujuannya buat dibuang..." dan ulasan campuran seperti "Seller ramah tapi produknya cacat" salah diprediksi karena mengandung kata positif. Kata yang belum pernah muncul di data train (misalnya "zonk") tidak dikenali, sehingga model cenderung memprediksi positif. Jumlah datanya juga terlalu sedikit dan berulang, sehingga tanpa kebocoran data Accuracy-nya hanya 0.445 sampai 0.50.
 
 **Kelemahan LLM API:** terdapat batas kuota dan rate limit. Pada eksperimen ini, free tier hanya mengizinkan 20 request per hari, sehingga ulasan harus dikirim per batch. Versi model juga dapat berubah; `gemini-2.0-flash` pada starter notebook sudah tidak tersedia. Selain itu, waktu responsnya lebih lambat, biaya bertambah sesuai jumlah ulasan, isi ulasan dikirim ke pihak ketiga, dan format output perlu dibatasi agar tetap konsisten.
 
@@ -111,7 +125,7 @@ Untuk 60 ulasan digunakan 6 request. Rata-rata per ulasan sekitar 32 token input
 Pendekatan yang direkomendasikan untuk dikembangkan lebih lanjut adalah **LLM API (Gemini Flash-Lite)**. Ulasan diproses per batch di background, dan selama berjalan data berlabel dikumpulkan untuk pengembangan model klasik ke depannya.
 
 Alasan:
-1. Skor pada test set sama, tetapi untuk ulasan dengan gaya bahasa baru Gemini jauh lebih baik (10/10 dibanding 6/10). Seluruh kesalahan model klasik berupa keluhan yang diprediksi positif, padahal jenis kesalahan ini paling merugikan bagi tim produk.
+1. Skor pada test set utama sama, tetapi skor model klasik berasal dari kebocoran data. Tanpa kebocoran, model klasik turun menjadi 0.50 (setara tebakan acak), sedangkan Gemini tetap 1.00. Untuk ulasan dengan gaya bahasa baru, Gemini juga jauh lebih baik (10/10 dibanding 6/10). Seluruh kesalahan model klasik berupa keluhan yang diprediksi positif, padahal jenis kesalahan ini paling merugikan bagi tim produk.
 2. Effort implementasinya paling kecil karena tidak memerlukan data berlabel dan training. Dataset saat ini (40 kalimat unik) belum cukup untuk melatih model klasik yang andal.
 3. Biayanya terjangkau, sekitar $41 per 1 juta ulasan.
 4. Waktu respons tidak terlalu kritis untuk kasus ini, karena label sentimen tidak harus tampil secara real-time dan dapat diproses di background.
@@ -132,9 +146,12 @@ model-experiment-assignment/
 ├── documentation/
 │   ├── model_comparison_summary.png
 │   ├── confusion_matrix.png
+│   ├── confusion_matrix_tanpa_kebocoran.png
 │   ├── model_comparison.csv
+│   ├── model_comparison_tanpa_kebocoran.csv
 │   ├── prediction_results.csv
 │   ├── llm_predictions.csv
+│   ├── llm_predictions_kalimat_unik.csv
 │   └── llm_predictions_uji_tambahan.csv
 ├── README.md
 └── requirements.txt
