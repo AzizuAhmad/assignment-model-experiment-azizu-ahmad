@@ -1,0 +1,41 @@
+row_index,review_text,raw_llm,latency_s,input_tokens,output_tokens
+189,Barang tidak berfungsi sama sekali begitu diterima.,negatif,0.4446434020996094,32.0,15.4
+68,"Sudah langganan di toko ini, kualitas selalu konsisten bagus.",positif,0.4446434020996094,32.0,15.4
+115,"Suka banget sama warnanya, sesuai ekspektasi.",positif,0.4446434020996094,32.0,15.4
+69,"Kualitas produk sangat memuaskan, akan order lagi.",positif,0.4446434020996094,32.0,15.4
+173,"Ukuran tidak sesuai, terlalu kecil dari yang dipesan.",negatif,0.4446434020996094,32.0,15.4
+6,Sudah bayar mahal tapi kualitas jauh dari ekspektasi.,negatif,0.4446434020996094,32.0,15.4
+71,"Suka banget sama warnanya, sesuai ekspektasi.",positif,0.4446434020996094,32.0,15.4
+54,"Fast respon, pengiriman cepat, barang aman sampai tujuan.",positif,0.4446434020996094,32.0,15.4
+74,"Produk palsu, bukan barang original seperti yang dijanjikan.",negatif,0.4446434020996094,32.0,15.4
+114,Komplain tidak ditanggapi sama sekali oleh penjual.,negatif,0.4446434020996094,32.0,15.4
+161,"Fast respon, pengiriman cepat, barang aman sampai tujuan.",positif,0.4861293792724609,33.0,23.4
+112,"Pengiriman lambat sekali, sudah dua minggu belum sampai.",negatif,0.4861293792724609,33.0,23.4
+10,"Bahan nyaman dipakai, ukuran pas, tidak mengecewakan.",positif,0.4861293792724609,33.0,23.4
+190,"Pelayanan ramah dan responsif, barang sampai lebih cepat dari estimasi.",positif,0.4861293792724609,33.0,23.4
+60,"Sangat mengecewakan, uang saya seperti terbuang percuma.",negatif,0.4861293792724609,33.0,23.4
+18,"Produk original dan berfungsi dengan baik, terima kasih!",positif,0.4861293792724609,33.0,23.4
+191,Pelayanan lambat dan tidak responsif saat dikomplain.,negatif,0.4861293792724609,33.0,23.4
+188,"Pelayanan ramah dan responsif, barang sampai lebih cepat dari estimasi.",positif,0.4861293792724609,33.0,23.4
+3,Warna produk berbeda jauh dari foto di listing.,negatif,0.4861293792724609,33.0,23.4
+47,Sudah bayar mahal tapi kualitas jauh dari ekspektasi.,negatif,0.4861293792724609,33.0,23.4
+1,"Puas banget belanja disini, proses cepat dan barang aman.",positif,0.6711617946624756,32.0,23.4
+30,"Ukuran dan warna berbeda dari pesanan, sangat kecewa.",negatif,0.6711617946624756,32.0,23.4
+135,"Produk original dan berfungsi dengan baik, terima kasih!",positif,0.6711617946624756,32.0,23.4
+80,"Sangat puas dengan pembelian ini, akan beli lagi di lain waktu.",positif,0.6711617946624756,32.0,23.4
+9,"Bahan nyaman dipakai, ukuran pas, tidak mengecewakan.",positif,0.6711617946624756,32.0,23.4
+89,"Barangnya bagus banget, sesuai foto dan pengiriman cepat!",positif,0.6711617946624756,32.0,23.4
+19,"Pelayanan cepat tanggap, produk berkualitas tinggi.",positif,0.6711617946624756,32.0,23.4
+148,"Barangnya bagus banget, sesuai foto dan pengiriman cepat!",positif,0.6711617946624756,32.0,23.4
+181,"Produk original dan berfungsi dengan baik, terima kasih!",positif,0.6711617946624756,32.0,23.4
+136,"Bahan murahan, tidak sesuai dengan harga yang dibayarkan.",negatif,0.6711617946624756,32.0,23.4
+7,"Belanja disini selalu puas, kualitas terjaga.",positif,0.48772971630096434,31.9,23.4
+127,Barang tidak berfungsi sama sekali begitu diterima.,negatif,0.48772971630096434,31.9,23.4
+134,"Puas banget belanja disini, proses cepat dan barang aman.",positif,0.48772971630096434,31.9,23.4
+167,"Tidak sesuai standar, banyak cacat pada produk yang diterima.",negatif,0.48772971630096434,31.9,23.4
+38,"Kualitas produk jelek, baru dipakai sekali sudah rusak.",negatif,0.48772971630096434,31.9,23.4
+157,"Produk palsu, bukan barang original seperti yang dijanjikan.",negatif,0.48772971630096434,31.9,23.4
+42,"Ukuran dan warna berbeda dari pesanan, sangat kecewa.",negatif,0.48772971630096434,31.9,23.4
+126,"Ukuran dan warna berbeda dari pesanan, sangat kecewa.",negatif,0.48772971630096434,31.9,23.4
+178,"Suka banget sama warnanya, sesuai ekspektasi.",positif,0.48772971630096434,31.9,23.4
+197,"Produknya rapi dan bersih, tidak ada cacat sama sekali.",positif,0.48772971630096434,31.9,23.4
